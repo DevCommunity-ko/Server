@@ -2,27 +2,22 @@ plugins {
     id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id "org.asciidoctor.convert" version "1.5.9.2"
+    id 'org.asciidoctor.convert' version '1.5.9.2'
+    // id "org.asciidoctor.jvm.convert" version "3.3.2" // gradle version 7 이상
 }
 
 group = 'com.devko'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
-    }
-}
-
-asciidoctor {
-    dependsOn test
-}
-
-bootJar {
-    dependsOn asciidoctor
-    from ("/html5") {
-        into 'static/docs'
     }
 }
 
@@ -39,10 +34,29 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
 test {
+    outputs.dir snippetsDir
     useJUnitPlatform()
 }
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+
+/*
+test {
+    useJUnitPlatform()
+}
+*/
