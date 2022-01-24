@@ -14,7 +14,6 @@ ext {
     snippetsDir = file('build/generated-snippets')
 }
 
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -26,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -35,7 +35,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
 test {
