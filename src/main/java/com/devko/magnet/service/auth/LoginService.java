@@ -1,11 +1,13 @@
 package com.devko.magnet.service.auth;
 
-import com.devko.magnet.model.entity.User;
+import com.devko.magnet.dto.auth.AdditionalInfo;
 import com.devko.magnet.dto.auth.LoginUser;
+import com.devko.magnet.model.entity.User;
 import com.devko.magnet.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 
 import java.util.HashMap;
@@ -43,5 +45,12 @@ abstract public class LoginService {
         info.put("userId", user.get().getId());
         info.put("newMember", isNew);
         return new ResponseEntity<>(info, httpStatus);
+    }
+
+    @Transactional
+    public void setAdditionalInfo(long userId, AdditionalInfo info){
+        User user = userRepository.getById(userId);
+        user.setAdditionalInfo(info);
+        userRepository.save(user);
     }
 }
