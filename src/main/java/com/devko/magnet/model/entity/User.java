@@ -1,5 +1,6 @@
 package com.devko.magnet.model.entity;
 
+import com.devko.magnet.dto.auth.AdditionalInfo;
 import com.devko.magnet.dto.auth.LoginUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -62,6 +63,8 @@ public class User {
 
     private String field;
 
+    private int career;
+
     private Character status;
 
     @JsonIgnore
@@ -109,5 +112,11 @@ public class User {
         this.email = loginUser.getEmail();
         this.phone = loginUser.getMobile();
         this.snsRefreshToken = loginUser.getRefreshToken();
+    }
+
+    public void setAdditionalInfo(AdditionalInfo info){
+        this.job = info.getJob();
+        this.field = info.getField();
+        this.career = info.getCareer();
     }
 }

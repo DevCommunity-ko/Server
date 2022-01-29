@@ -1,4 +1,4 @@
-package com.devko.magnet.controller;
+package com.devko.magnet.controller.home;
 
 import com.devko.magnet.dto.project.ProjectImageDto;
 import com.devko.magnet.service.image.S3UploadService;
