@@ -1,8 +1,8 @@
 package com.devko.magnet.service.auth;
 
 import com.devko.magnet.dto.auth.AdditionalInfo;
-import com.devko.magnet.model.entity.User;
 import com.devko.magnet.dto.auth.LoginUser;
+import com.devko.magnet.model.entity.User;
 import com.devko.magnet.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;

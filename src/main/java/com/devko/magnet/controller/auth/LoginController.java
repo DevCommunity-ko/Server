@@ -2,16 +2,13 @@ package com.devko.magnet.controller.auth;
 
 import com.devko.magnet.dto.auth.AdditionalInfo;
 import com.devko.magnet.dto.auth.LoginUser;
-import com.devko.magnet.model.Field;
-import com.devko.magnet.model.Job;
 import com.devko.magnet.service.auth.NaverLoginService;
-import com.devko.magnet.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import javax.validation.Valid;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -50,7 +47,7 @@ public class LoginController {
     }
 
     @PostMapping("info/{userId}")
-    public ResponseEntity saveAdditionalInfo(@PathVariable Long userId, AdditionalInfo info){
+    public ResponseEntity saveAdditionalInfo(@PathVariable Long userId, @Valid AdditionalInfo info){
         loginService.setAdditionalInfo(userId, info);
         return new ResponseEntity(HttpStatus.OK);
     }
