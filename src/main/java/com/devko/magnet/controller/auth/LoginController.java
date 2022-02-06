@@ -1,6 +1,7 @@
 package com.devko.magnet.controller.auth;
 
 import com.devko.magnet.dto.auth.AdditionalInfo;
+import com.devko.magnet.dto.auth.LoginParamDto;
 import com.devko.magnet.dto.auth.LoginUser;
 import com.devko.magnet.service.auth.NaverLoginService;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,12 @@ public class LoginController {
     private final NaverLoginService loginService;
 
     @PostMapping("{type}")
-    public ResponseEntity<Map<String, Object>> login(@PathVariable("type") String type, @RequestParam Map<String, String> params){
+    public ResponseEntity<Map<String, Object>> login(@PathVariable("type") String type, @RequestBody LoginParamDto loginParamDto){
         LoginUser user = new LoginUser();
         ResponseEntity<Map<String, Object>> responseEntity;
         switch (type){
             case "naver" :
-                Map<String, String> access = loginService.getAccessToken(params.get("code"), params.get("state"));
+                Map<String, String> access = loginService.getAccessToken(loginParamDto.getCode(), loginParamDto.getState());
                 user = loginService.getUserInfo(access.get("access_token"));
                 user.setRefreshToken(access.get("refresh_token"));
                 break;
