@@ -2,6 +2,8 @@ package com.devko.magnet.model.entity;
 
 import com.devko.magnet.dto.auth.AdditionalInfo;
 import com.devko.magnet.dto.auth.LoginUser;
+import com.devko.magnet.model.enums.UserStatus;
+import com.devko.magnet.model.enums.converter.UserStatusAttributeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -65,7 +67,9 @@ public class User {
 
     private int career;
 
-    private Character status;
+    @Enumerated(value = EnumType.STRING)
+    @Convert(converter = UserStatusAttributeConverter.class)
+    private UserStatus status = UserStatus.N;
 
     @JsonIgnore
     @CreatedDate
@@ -112,6 +116,10 @@ public class User {
         this.email = loginUser.getEmail();
         this.phone = loginUser.getMobile();
         this.snsRefreshToken = loginUser.getRefreshToken();
+    }
+
+    public void agreePolicy(){
+        this.status = UserStatus.M;
     }
 
     public void setAdditionalInfo(AdditionalInfo info){

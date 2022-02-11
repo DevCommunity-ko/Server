@@ -3,6 +3,7 @@ package com.devko.magnet.service.auth;
 import com.devko.magnet.dto.auth.AdditionalInfo;
 import com.devko.magnet.dto.auth.LoginUser;
 import com.devko.magnet.model.entity.User;
+import com.devko.magnet.model.enums.UserStatus;
 import com.devko.magnet.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,9 @@ abstract public class LoginService {
         Map<String, Object> info = new HashMap<>();
         HttpStatus httpStatus = HttpStatus.OK;
         boolean isNew = false;
-        if(user.isEmpty()){
-            user = Optional.of(userRepository.save(new User(loginUser)));
+        if(user.isEmpty() || user.get().getStatus().equals(UserStatus.N)){
+            if(user.isEmpty())
+                user = Optional.of(userRepository.save(new User(loginUser)));
             httpStatus = HttpStatus.CREATED;
             isNew = true;
         }
@@ -45,6 +47,12 @@ abstract public class LoginService {
         info.put("userId", user.get().getId());
         info.put("newMember", isNew);
         return new ResponseEntity<>(info, httpStatus);
+    }
+
+    @Transactional
+    public void agreePolicy(long userId){
+        User user = userRepository.getById(userId);
+        user.agreePolicy();
     }
 
     @Transactional

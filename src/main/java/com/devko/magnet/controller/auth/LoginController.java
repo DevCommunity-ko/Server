@@ -39,11 +39,17 @@ public class LoginController {
     }
 
     @DeleteMapping("{userId}")
-    public ResponseEntity logout(@PathVariable Long userId){
+    public ResponseEntity logout(@PathVariable long userId){
         //TODO:: provider에 따라 다르게 적용
         String accessToken = loginService.renewalAccessToken(userId);
         loginService.logout(accessToken);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("policy/{userId}")
+    public ResponseEntity agreePolicy(@PathVariable long userId){
+        loginService.agreePolicy(userId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("info/{userId}")
