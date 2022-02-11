@@ -1,24 +1,29 @@
 package com.devko.magnet.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDateTime;
 
 @Getter
+@Builder
 public class ErrorResponse {
-    private String message;
-    private int status;
-    private String code;
+    private final LocalDateTime timestamp = LocalDateTime.now();
+    private final int status;
+    private final String error;
+    private final String code;
+    private final String message;
 
-    public ErrorResponse(String message, int status, String code) {
-        this.message = message;
-        this.status = status;
-        this.code = code;
-    }
-
-    public ErrorResponse(ErrorCode code){
-        this.message = code.getMessage();
-        this.status = code.getStatus();
-        this.code = code.getCode();
-        this.code = code.getCode();
+    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorCode){
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                                    .body(ErrorResponse.builder()
+                                            .status(errorCode.getHttpStatus().value())
+                                            .error(errorCode.getHttpStatus().name())
+                                            .code(errorCode.name())
+                                            .message(errorCode.getMessage())
+                                            .build()
+                                    );
     }
 }
