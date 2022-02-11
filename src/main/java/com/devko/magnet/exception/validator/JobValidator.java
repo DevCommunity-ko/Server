@@ -1,7 +1,7 @@
 package com.devko.magnet.exception.validator;
 
 import com.devko.magnet.exception.annotation.CheckJob;
-import com.devko.magnet.model.Job;
+import com.devko.magnet.model.enums.Job;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
