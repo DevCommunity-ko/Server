@@ -1,7 +1,7 @@
 package com.devko.magnet.exception.validator;
 
 import com.devko.magnet.exception.annotation.CheckField;
-import com.devko.magnet.model.Field;
+import com.devko.magnet.model.enums.Field;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

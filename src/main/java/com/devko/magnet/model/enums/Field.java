@@ -1,4 +1,4 @@
-package com.devko.magnet.model;
+package com.devko.magnet.model.enums;
 
 public enum Field {
     frontend, backend, android, iOS, dev_ops, data_engineer, ai, // 개발직
