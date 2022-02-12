@@ -18,7 +18,7 @@ public class LoginController {
     private final NaverLoginService loginService;
 
     @PostMapping("{type}")
-    public ResponseEntity<Map<String, Object>> login(@PathVariable("type") String type, @RequestParam Map<String, String> params){
+    public ResponseEntity<Map<String, Object>> login(@PathVariable("type") String type, @RequestBody Map<String, String> params){
         LoginUser user = new LoginUser();
         ResponseEntity<Map<String, Object>> responseEntity;
         switch (type){
