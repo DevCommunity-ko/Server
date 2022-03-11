@@ -1,9 +1,9 @@
-package com.devko.magnet.dto.project;
+package com.devko.magnet.dto.image;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class ProjectImageDto {
+public class ImageDto {
     MultipartFile file;
 }

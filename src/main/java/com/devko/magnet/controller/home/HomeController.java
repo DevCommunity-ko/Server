@@ -1,6 +1,6 @@
 package com.devko.magnet.controller.home;
 
-import com.devko.magnet.dto.project.ProjectImageDto;
+import com.devko.magnet.dto.image.ImageDto;
 import com.devko.magnet.service.image.S3UploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class HomeController {
     private final S3UploadService s3UploadService; // Autowired 대신 생성자 주입을 해 보았다.
 
     @PostMapping("image-test")
-    public ResponseEntity home(ProjectImageDto projectImage) throws IOException {
+    public ResponseEntity home(ImageDto projectImage) throws IOException {
         return s3UploadService.upload(projectImage.getFile(), "test");
     }
 
