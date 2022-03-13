@@ -1,13 +1,14 @@
 package com.devko.magnet.controller.auth;
 
-import com.devko.magnet.dto.auth.AdditionalInfo;
+import com.devko.magnet.service.auth.NaverLoginService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,9 +22,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static com.devko.magnet.document.ApiDocumentUtil.getDocumentRequest;
 import static com.devko.magnet.document.ApiDocumentUtil.getDocumentResponse;
-import static org.mockito.BDDMockito.given;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static org.mockito.Mockito.mock;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
@@ -33,18 +33,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+@AutoConfigureRestDocs
 class LoginControllerTest {
     @Autowired
     private WebApplicationContext context;
     private MockMvc mockMvc;
-    private LoginController loginController;
+    private NaverLoginService loginService;
 
     @BeforeEach
     public void setUp(RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .apply(documentationConfiguration(restDocumentation))
                 .build();
-        loginController = mock(LoginController.class);
+        loginService = mock(NaverLoginService.class);
     }
 
     /*@Test
@@ -58,27 +59,48 @@ class LoginControllerTest {
     }*/
 
     @Test
+    @DisplayName("약관동의 성공")
+    void agreePolicy() throws Exception {
+        // given
+        long userId = 4;
+
+        // when
+        ResultActions ra = mockMvc.perform(post("/auth/policy/{userId}", userId));
+
+        // then
+        ra.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(document("LoginController/agreePolicy",
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        pathParameters(
+                                parameterWithName("userId").description("회원번호")
+                        )));
+    }
+
+    @Test
+    @DisplayName("추가정보 입력 성공")
     void saveAdditionalInfo() throws Exception {
+        // given
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("job", "collegian");
         params.add("field", "backend");
         params.add("career", "0");
+        long userId = 4;
 
-        AdditionalInfo ai = new AdditionalInfo(params.getFirst("job"), params.getFirst("field"), Integer.parseInt(params.getFirst("career")));
-        given(loginController.saveAdditionalInfo(2L, ai))
-                .willReturn(ResponseEntity.ok(null));
-
-        ResultActions ra = mockMvc.perform(post("/auth/info/{userId}", 2)
+        // when
+        ResultActions ra = mockMvc.perform(post("/auth/info/{userId}", userId)
                 .params(params)
                 .contentType(MediaType.APPLICATION_JSON));
 
+        // then
         ra.andExpect(status().isOk())
                 .andDo(print())
                 .andDo(document("LoginController/saveAdditionalInfo",
                         getDocumentRequest(),
                         getDocumentResponse(),
                         pathParameters(
-                                parameterWithName("userId").description("회원ID")
+                                parameterWithName("userId").description("회원번호")
                         ),
                         requestParameters(
                                 parameterWithName("job").description("직군"),

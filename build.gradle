@@ -54,19 +54,19 @@ asciidoctor {
 bootJar {
     dependsOn asciidoctor
     from("${asciidoctor.outputDir}/html5") {
-        into "src/main/resources/static/docs"
+        into "static/docs"
     }
 }
 
 openapi3 {
-    server = 'https://3.34.119.140:8080'
+    server = 'http://localhost:8080'
     title = 'Magnet Backend'
     description = 'Magnet Backend API'
     version = '0.1.0'
     format = 'yaml'
 
     copy{
-        from " build/api-spec"
-        into "src/main/resources/static/docs"
+        from "build/api-spec"
+        into "static/docs"
     }
 }
