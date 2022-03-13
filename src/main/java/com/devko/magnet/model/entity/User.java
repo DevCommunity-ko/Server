@@ -2,26 +2,24 @@ package com.devko.magnet.model.entity;
 
 import com.devko.magnet.dto.auth.AdditionalInfo;
 import com.devko.magnet.dto.auth.LoginUser;
+import com.devko.magnet.model.entity.base.BaseTimeEntity;
 import com.devko.magnet.model.enums.UserStatus;
 import com.devko.magnet.model.enums.converter.UserStatusAttributeConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 @Table(name = "user")
-public class User {
+public class User extends BaseTimeEntity {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,16 +70,6 @@ public class User {
     private UserStatus status = UserStatus.N;
 
     @JsonIgnore
-    @CreatedDate
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @JsonIgnore
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @JsonIgnore
     @Column(name = "sns_type")
     private String snsType;
 
@@ -97,6 +85,10 @@ public class User {
     @Column(name = "sns_connected_at")
     private LocalDateTime snsConnectedAt;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "leader")
+    private List<Team> ownTeams;
+
     public User(LoginUser loginUser){
         this.userName = loginUser.getName();
         this.nickname = loginUser.getNickname();
@@ -109,6 +101,11 @@ public class User {
         this.snsId = loginUser.getId();
         this.snsRefreshToken = loginUser.getRefreshToken();
         this.snsConnectedAt = LocalDateTime.now();
+    }
+
+    public void addOwnTeam(Team team){
+        ownTeams.add(team);
+        team.setLeader(this);
     }
 
     public void resetUserInfo(LoginUser loginUser){
