@@ -1,5 +1,7 @@
 package com.devko.magnet.service.user;
 
+import com.devko.magnet.exception.CustomException;
+import com.devko.magnet.exception.ErrorCode;
 import com.devko.magnet.model.entity.User;
 import com.devko.magnet.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +17,7 @@ public class UserService {
     public User getUser(long id){
         Optional<User> user = userRepository.findById(id);
         if(user.isEmpty())
-            // TODO :: 예외처리
-            return new User();
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         else
             return user.get();
     }
