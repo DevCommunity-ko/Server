@@ -1,0 +1,25 @@
+= Magnet API
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+[[member-auth]]
+== Auth
+
+[[member-auth-policy]]
+=== 약관 동의
+
+==== HTTP Request
+include::{snippets}/LoginController/agreePolicy/http-request.adoc[]
+
+==== HTTP Response
+include::{snippets}/LoginController/agreePolicy/http-response.adoc[]
+
+[[member-auth-addtionalInfo]]
+=== 추가정보 입력
+
+==== HTTP Request
+include::{snippets}/LoginController/saveAdditionalInfo/http-request.adoc[]
+
+==== HTTP Response
+include::{snippets}/LoginController/saveAdditionalInfo/http-response.adoc[]

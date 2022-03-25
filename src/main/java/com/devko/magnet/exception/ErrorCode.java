@@ -23,6 +23,7 @@ public enum ErrorCode {
 
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
     MEMBER_NOT_FOUND(NOT_FOUND, "해당 유저 정보를 찾을 수 없습니다"),
+    TEAM_NOT_FOUND(NOT_FOUND, "존재하지 않는 팀입니다"),
     REFRESH_TOKEN_NOT_FOUND(NOT_FOUND, "로그아웃 된 사용자입니다"),
 
     /* 405 METHOD_MOT_ALLOWED : Method가 존재하지 않음*/
@@ -30,6 +31,7 @@ public enum ErrorCode {
 
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     DUPLICATE_RESOURCE(CONFLICT, "데이터가 이미 존재합니다"),
+    DUPLICATE_TEAM(CONFLICT, "이미 존재하는 팀입니다."),
 
     /* 500 INTERNAL_SERVER_ERROR : 처리하지 못한 에러 */
     UNKNOWN_ERROR(INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR.name())

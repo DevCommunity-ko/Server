@@ -1,28 +1,27 @@
 package com.devko.magnet.model.entity;
 
-import lombok.AllArgsConstructor;
+import com.devko.magnet.dto.team.TeamInfo;
+import com.devko.magnet.model.entity.base.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-public class Team {
+public class Team extends BaseTimeEntity {
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    private long leaderId;
+    @ManyToOne
+    @JoinColumn(name = "leader_id")
+    private User leader;
 
     @Column(name = "profile_url")
     private String profileURL;
@@ -32,9 +31,21 @@ public class Team {
     @Column(name = "github_url")
     private String githubURL;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
+    public Team(TeamInfo teamInfo) {
+        this.name = teamInfo.getName();
+        this.profileURL = teamInfo.getProfileURL();
+        this.introduction = teamInfo.getIntroduction();
+        this.githubURL = teamInfo.getGithubURL();
+    }
 
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
+    public void setLeader(User leader) {
+        this.leader = leader;
+    }
+
+    public void editTeam(TeamInfo teamInfo){
+        this.name = teamInfo.getName();
+        this.profileURL = teamInfo.getProfileURL();
+        this.introduction = teamInfo.getIntroduction();
+        this.githubURL = teamInfo.getGithubURL();
+    }
 }

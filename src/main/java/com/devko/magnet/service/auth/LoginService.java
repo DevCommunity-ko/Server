@@ -2,6 +2,8 @@ package com.devko.magnet.service.auth;
 
 import com.devko.magnet.dto.auth.AdditionalInfo;
 import com.devko.magnet.dto.auth.LoginUser;
+import com.devko.magnet.exception.CustomException;
+import com.devko.magnet.exception.ErrorCode;
 import com.devko.magnet.model.entity.User;
 import com.devko.magnet.model.enums.UserStatus;
 import com.devko.magnet.repository.user.UserRepository;
@@ -51,14 +53,18 @@ abstract public class LoginService {
 
     @Transactional
     public void agreePolicy(long userId){
-        User user = userRepository.getById(userId);
-        user.agreePolicy();
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isEmpty())
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        user.get().agreePolicy();
     }
 
     @Transactional
     public void setAdditionalInfo(long userId, AdditionalInfo info){
-        User user = userRepository.getById(userId);
-        user.setAdditionalInfo(info);
-        userRepository.save(user);
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isEmpty())
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        user.get().setAdditionalInfo(info);
+        userRepository.save(user.get());
     }
 }
