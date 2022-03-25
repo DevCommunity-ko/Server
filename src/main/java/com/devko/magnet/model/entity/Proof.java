@@ -11,12 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.devko.magnet.model.enums.FileType;
 import com.devko.magnet.model.enums.ProofAbout;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Proof {
 
@@ -30,8 +31,6 @@ public class Proof {
 
 	@Enumerated(EnumType.STRING)
 	private ProofAbout about;
-
-	//private FileType type;
 
 	@Column(columnDefinition = "text")
 	private String fileUrl;

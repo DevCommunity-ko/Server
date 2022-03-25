@@ -16,9 +16,11 @@ import com.devko.magnet.model.enums.ProjectKind;
 import com.devko.magnet.model.enums.ProjectStatus;
 import com.devko.magnet.model.enums.PublishType;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Project extends Timestamped {
 

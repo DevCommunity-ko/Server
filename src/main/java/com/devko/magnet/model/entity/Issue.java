@@ -11,15 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import com.devko.magnet.model.entity.base.BaseTimeEntity;
 import com.devko.magnet.model.enums.IssueStatus;
 import com.devko.magnet.model.enums.PublishType;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Issue extends BaseTimeEntity {
 

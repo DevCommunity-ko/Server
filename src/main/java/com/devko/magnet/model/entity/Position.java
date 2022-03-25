@@ -10,7 +10,10 @@ import javax.persistence.ManyToOne;
 import com.devko.magnet.model.entity.base.BaseTimeEntity;
 import com.devko.magnet.model.entity.id.PositionId;
 
+import lombok.Getter;
+
 @Entity
+@Getter
 @IdClass(PositionId.class)
 public class Position extends BaseTimeEntity {
 
