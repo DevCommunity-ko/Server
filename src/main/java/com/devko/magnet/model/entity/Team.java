@@ -1,5 +1,8 @@
 package com.devko.magnet.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.devko.magnet.dto.team.TeamInfo;
 import com.devko.magnet.model.entity.base.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,4 +51,8 @@ public class Team extends BaseTimeEntity {
         this.introduction = teamInfo.getIntroduction();
         this.githubURL = teamInfo.getGithubURL();
     }
+
+    /** Project 양방향 매핑 */
+    @OneToMany
+    private List<Project> projects = new ArrayList<>();
 }

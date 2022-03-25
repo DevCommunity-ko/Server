@@ -53,4 +53,16 @@ public class Project extends Timestamped {
 
 	@Column(columnDefinition = "text", name = "github_url")
 	private String gitHubURL;
+
+	/** Team 양방향 매핑 */
+	public void setTeam(Team team) {
+		if(this.team != null) {
+			this.team.getProjects().remove(this);
+		}
+
+		this.team = team;
+		if(!team.getProjects().contains(this)) {
+			team.getProjects().add(this);
+		}
+	}
 }
