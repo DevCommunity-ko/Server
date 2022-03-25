@@ -8,15 +8,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.devko.magnet.dto.project.ProjectDto;
+import com.devko.magnet.response.Response;
+import com.devko.magnet.response.ResponseCode;
+import com.devko.magnet.response.ResponseMessage;
 
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
 
-    @PostMapping
-    public ResponseEntity createProject(@RequestBody ProjectDto projectDto) {
+	private static final Response response = new Response();
 
-        return new ResponseEntity("SUCCESS", HttpStatus.OK);
-    }
+	@PostMapping
+	public Response createProject(@RequestBody ProjectDto projectDto) {
+
+		return response.withCodeAndMessage(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+	}
 
 }
