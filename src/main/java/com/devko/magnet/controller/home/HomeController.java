@@ -1,31 +1,38 @@
 package com.devko.magnet.controller.home;
 
-import com.devko.magnet.dto.image.ImageDto;
-import com.devko.magnet.service.image.S3UploadService;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import com.devko.magnet.dto.image.ImageDto;
+import com.devko.magnet.response.Response;
+import com.devko.magnet.response.ResponseCode;
+import com.devko.magnet.response.ResponseMessage;
+import com.devko.magnet.service.image.S3UploadService;
 
-@Controller
+import lombok.RequiredArgsConstructor;
+
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/")
 public class HomeController {
 
-    private final S3UploadService s3UploadService; // Autowired 대신 생성자 주입을 해 보았다.
+	private final Response response = new Response<>();
+	private final S3UploadService s3UploadService;
 
-    @PostMapping("image-test")
-    public ResponseEntity home(ImageDto projectImage) throws IOException {
-        return s3UploadService.upload(projectImage.getFile(), "test");
-    }
+	@PostMapping("image-test")
+	public Response home(ImageDto projectImage) throws IOException {
+		System.out.println(">>>>>>>>>>>>>>>>>> HI");
+		return response.withAll(ResponseCode.SUCCESS, ResponseMessage.SUCCESS,s3UploadService.upload(projectImage.getFile(), "test"));
+	}
 
-    @GetMapping
-    public ResponseEntity executeTest() {
-        return new ResponseEntity("Hello, World!", HttpStatus.OK);
-    }
+	@GetMapping
+	public ResponseEntity executeTest() {
+		return new ResponseEntity("Hello, World!", HttpStatus.OK);
+	}
 }

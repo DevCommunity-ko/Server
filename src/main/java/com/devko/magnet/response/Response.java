@@ -2,8 +2,10 @@ package com.devko.magnet.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor
 public class Response<T> {
 

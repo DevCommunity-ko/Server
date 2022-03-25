@@ -27,10 +27,10 @@ public class S3UploadService {
 	@Value("${cloud.aws.s3.bucket}")
 	public String bucket;
 	
-	public ResponseEntity upload(MultipartFile uploadFile, String dir) throws IllegalStateException, IOException {
+	public String upload(MultipartFile uploadFile, String dir) throws IllegalStateException, IOException {
 		String fileName = dir + "/" + UUID.randomUUID() + "-" + uploadFile.getOriginalFilename(); // 파일이름 커스텀
 		ObjectMetadata metadata = new ObjectMetadata();
-		return new ResponseEntity(putS3(fileName, uploadFile.getInputStream(), metadata), HttpStatus.OK);
+		return putS3(fileName, uploadFile.getInputStream(), metadata);
 	}
 	
 	private String putS3(String fileName, InputStream inputStream, ObjectMetadata metadata) {

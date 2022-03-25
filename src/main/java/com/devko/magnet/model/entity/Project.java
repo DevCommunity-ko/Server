@@ -32,9 +32,6 @@ public class Project extends Timestamped {
 
 	private String name;
 
-	@Column(columnDefinition = "text")
-	private String introduction;
-
 	@Enumerated(EnumType.STRING)
 	private ProjectStatus status;
 
@@ -45,14 +42,17 @@ public class Project extends Timestamped {
 	@Enumerated(EnumType.STRING)
 	private PublishType publishType;
 
+	@Column(columnDefinition = "text")
+	private String introduction;
+
 	@Enumerated(EnumType.STRING)
 	private ProjectKind kind;
 
 	@Column(columnDefinition = "text", name = "image_url")
-	private String imageURL;
+	private String imageUrl;
 
 	@Column(columnDefinition = "text", name = "github_url")
-	private String gitHubURL;
+	private String gitHubUrl;
 
 	/** Team 양방향 매핑 */
 	public void setTeam(Team team) {
