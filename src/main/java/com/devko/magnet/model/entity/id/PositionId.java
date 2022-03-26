@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class PositionId implements Serializable {
-	private Long positionId;
-	private Long userId;
+	private Long project;
+	private Long user;
 }
