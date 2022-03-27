@@ -31,15 +31,22 @@ public class Team extends BaseTimeEntity {
     @Column(name = "github_url")
     private String githubURL;
 
+    private boolean isPublic = true;
+
     public Team(TeamInfo teamInfo) {
         this.name = teamInfo.getName();
         this.profileURL = teamInfo.getProfileURL();
         this.introduction = teamInfo.getIntroduction();
         this.githubURL = teamInfo.getGithubURL();
+        this.isPublic = teamInfo.isPublic();
     }
 
     public void setLeader(User leader) {
         this.leader = leader;
+    }
+
+    public void setPublic(boolean isPublic){
+        this.isPublic = isPublic;
     }
 
     public void editTeam(TeamInfo teamInfo){
