@@ -1,6 +1,5 @@
 package com.devko.magnet.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +15,13 @@ public class ErrorResponse {
     private final String code;
     private final String message;
 
-    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorCode){
-        return ResponseEntity.status(errorCode.getHttpStatus())
+    public static ResponseEntity<ErrorResponse> toResponseEntity(StatusCode statusCode){
+        return ResponseEntity.status(statusCode.getHttpStatus())
                                     .body(ErrorResponse.builder()
-                                            .status(errorCode.getHttpStatus().value())
-                                            .error(errorCode.getHttpStatus().name())
-                                            .code(errorCode.name())
-                                            .message(errorCode.getMessage())
+                                            .status(statusCode.getHttpStatus().value())
+                                            .error(statusCode.getHttpStatus().name())
+                                            .code(statusCode.name())
+                                            .message(statusCode.getMessage())
                                             .build()
                                     );
     }

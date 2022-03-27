@@ -8,7 +8,14 @@ import static org.springframework.http.HttpStatus.*;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorCode {
+public enum StatusCode {
+    /* 200 OK : 요청 처리 성공 */
+    SUCCESS(OK, "요청을 성공적으로 처리했습니다"),
+    CREATE_NEW(CREATED, "생성을 완료했습니다"),
+
+    /* 204 No_Content : 반환 값이 없음 */
+    DELETE(NO_CONTENT, "정상적으로 삭제되었습니다"),
+
     /* 400 BAD_REQUEST : 잘못된 요청 */
     INVALID_INPUT_VALUE(BAD_REQUEST, "잘못된 입력값입니다"),
     INVALID_REFRESH_TOKEN(BAD_REQUEST, "리프레시 토큰이 유효하지 않습니다"),
