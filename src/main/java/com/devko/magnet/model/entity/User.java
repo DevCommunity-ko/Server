@@ -65,6 +65,7 @@ public class User extends BaseTimeEntity {
 
     private int career;
 
+    @JsonIgnore
     @Enumerated(value = EnumType.STRING)
     @Convert(converter = UserStatusAttributeConverter.class)
     private UserStatus status = UserStatus.N;
@@ -101,6 +102,9 @@ public class User extends BaseTimeEntity {
         this.snsId = loginUser.getId();
         this.snsRefreshToken = loginUser.getRefreshToken();
         this.snsConnectedAt = LocalDateTime.now();
+
+        if(this.nickname == null)
+            this.nickname = loginUser.getName();
     }
 
     public void addOwnTeam(Team team){
